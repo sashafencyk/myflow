@@ -4,6 +4,15 @@ using System.Diagnostics;
 
 Console.WriteLine("Hello, World!");
 
-var statusProcess = Process.Start("git", "status");
-var test = await statusProcess.StandardOutput.ReadToEndAsync();
-Console.WriteLine(test);
+Console.WriteLine(await ExecuteGitCommand("tag -l"));
+
+async Task<string> ExecuteGitCommand(string command)
+{
+	var processStartInfo = new ProcessStartInfo("git", command)
+	{
+		RedirectStandardOutput = true
+	};
+
+	var statusProcess = Process.Start(processStartInfo);
+	return await statusProcess!.StandardOutput.ReadToEndAsync();
+}
