@@ -3,16 +3,9 @@
 using System.Diagnostics;
 
 Console.WriteLine("Hello, World!");
+Console.WriteLine(new Version(1, 0, 0));
+var test = Version.Parse("1.140.11");
+Console.WriteLine(test);
 
-Console.WriteLine(await ExecuteGitCommand("tag -l"));
+// Console.WriteLine(await ExecuteGitCommand("tag -l"));
 
-async Task<string> ExecuteGitCommand(string command)
-{
-	var processStartInfo = new ProcessStartInfo("git", command)
-	{
-		RedirectStandardOutput = true
-	};
-
-	var statusProcess = Process.Start(processStartInfo);
-	return await statusProcess!.StandardOutput.ReadToEndAsync();
-}
