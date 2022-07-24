@@ -10,6 +10,17 @@ public class GitService
 		return res.Trim();
 	}
 
+	public async Task<string> GetAllTagVersions()
+	{
+		var tagArguments = 
+
+		// export const getTagVersions = async ({ exact, matchVersion } = {}) => {
+		// 	return (await run(`git tag ${exact ? '--points-at HEAD' : ''} -l "v${matchVersion || '*'}"`, true))
+		// 		.split(/\s+/)
+		// 		.map((x) => Version.parse(x.slice(1)))
+		// 		.filter((x) => x);
+	}
+
 	private Task<string> ExecuteGitCommand(string command)
 	{
 		var processStartInfo = new ProcessStartInfo("git", command)

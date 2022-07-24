@@ -30,8 +30,8 @@ public class MyFlowService
 			var fileVersion = await _versionFileService.GetVersionAsync();
 			_logger.LogInformation("File version:{FileVersion}", fileVersion);
 			var branch = await _branchResolverService.GetBranchAsync();
-			_logger.LogInformation("Branch model: {BranchModel}", JsonSerializer.Serialize(branch));
-
+			_logger.LogInformation("Branch model: {BranchModel}", branch);
+			
 		}
 		catch (Exception ex)
 		{
