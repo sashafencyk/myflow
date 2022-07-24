@@ -10,9 +10,11 @@ public class GitService
 		return res.Trim();
 	}
 
-	public async Task<string> GetAllTagVersions()
+
+	public async Task<IEnumerable<Version>> GetAllTagVersions(string versionFilter = "*", bool specificCommit = true)
 	{
-		var tagArguments = 
+		var res = await ExecuteGitCommand("");
+
 
 		// export const getTagVersions = async ({ exact, matchVersion } = {}) => {
 		// 	return (await run(`git tag ${exact ? '--points-at HEAD' : ''} -l "v${matchVersion || '*'}"`, true))
