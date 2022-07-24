@@ -1,11 +1,27 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.Diagnostics;
+using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using myflow.Services;
+using myflow.Services.Git;
+using myflow.Services.VersionFile;
 
-Console.WriteLine("Hello, World!");
-Console.WriteLine(new Version(1, 0, 0));
-var test = Version.Parse("1.140.11");
-Console.WriteLine(test);
+var argsStr = JsonSerializer.Serialize(args);
+Console.WriteLine("Starting with args: " + argsStr);
 
-// Console.WriteLine(await ExecuteGitCommand("tag -l"));
+var host = Host.CreateDefaultBuilder(args)
+	.ConfigureServices((context, collection) =>
+	{
+		collection.AddSingleton(context.Configuration);
+		collection.AddSingleton<MyFlowService>();
+		collection.AddSingleton<GitService>();
+		collection.AddSingleton<VersionFileService>();
+		collection.AddSingleton<BranchResolverService>();
+	})
+	.Build();
+
+var myFlowService = host.Services.GetRequiredService<MyFlowService>();
+await myFlowService.RunFlowAsync();
+
 

@@ -1,15 +1,16 @@
 ﻿using System.Diagnostics;
 
-namespace myflow.Services.GitService;
+namespace myflow.Services.Git;
 
 public class GitService
 {
-	public async Task<IEnumerable<string>> GetVersions()
+	public async Task<string> GetActiveBranchAsync()
 	{
-		
+		var res = await ExecuteGitCommand("symbolic-ref HEAD");
+		return res.Trim();
 	}
 
-	private async Task<string> ExecuteGitCommand(string command)
+	private Task<string> ExecuteGitCommand(string command)
 	{
 		var processStartInfo = new ProcessStartInfo("git", command)
 		{
@@ -17,6 +18,6 @@ public class GitService
 		};
 
 		var statusProcess = Process.Start(processStartInfo);
-		return await statusProcess!.StandardOutput.ReadToEndAsync();
+		return statusProcess!.StandardOutput.ReadToEndAsync();
 	}
 }
