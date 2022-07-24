@@ -10,17 +10,21 @@ public class GitService
 		return res.Trim();
 	}
 
-
-	public async Task<IEnumerable<Version>> GetAllTagVersions(string versionFilter = "*", bool specificCommit = true)
+	public async Task<IEnumerable<Version>> GetAllTagVersions(string versionFilter = "*", bool specificCommit = false)
 	{
-		var res = await ExecuteGitCommand("");
-
-
-		// export const getTagVersions = async ({ exact, matchVersion } = {}) => {
-		// 	return (await run(`git tag ${exact ? '--points-at HEAD' : ''} -l "v${matchVersion || '*'}"`, true))
-		// 		.split(/\s+/)
-		// 		.map((x) => Version.parse(x.slice(1)))
-		// 		.filter((x) => x);
+		var specificCommitFilter = specificCommit ? " --points-at HEAD" : "";
+		var commandRes = await ExecuteGitCommand($"tag -l \"v{versionFilter}\"{specificCommitFilter}");
+		var versions = commandRes.Split(
+				new[] { "\r\n", "\r", "\n" },
+				StringSplitOptions.None
+			)
+			.Select(x => x.Trim())
+			.Where(x => x.StartsWith("v"))
+			.Select(x => !Version.TryParse(x.TrimStart('v'), out var version) ? null : version)
+			.Where(x => x != null)
+			.Select(x => x!)
+			.ToList();
+		return versions;
 	}
 
 	private Task<string> ExecuteGitCommand(string command)

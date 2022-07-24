@@ -31,7 +31,13 @@ public class MyFlowService
 			_logger.LogInformation("File version:{FileVersion}", fileVersion);
 			var branch = await _branchResolverService.GetBranchAsync();
 			_logger.LogInformation("Branch model: {BranchModel}", branch);
-			
+			var tags = await _gitService.GetAllTagVersions();
+			_logger.LogInformation("Tags");
+			foreach (var tag in tags)
+			{
+				_logger.LogInformation(tag.ToString());
+			}
+
 		}
 		catch (Exception ex)
 		{
