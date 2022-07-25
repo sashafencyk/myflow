@@ -1,8 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using myflow.Services.Git;
-using myflow.Services.VersionFile;
 
 namespace myflow.Services;
 
@@ -88,6 +86,13 @@ public record BranchModel(string? PrSourceBranch, string? BuildSourceBranch, str
 	public bool IsPr()
 	{
 		return !string.IsNullOrWhiteSpace(PrSourceBranch);
+	}
+
+	public string BranchEnvironment()
+	{
+		return IsPr() ? "pr" :
+			IsMaster() ? "prod" :
+			IsHotfix() || IsRelease() ? "test" : "dev";
 	}
 
 	public Version? BranchVersion()

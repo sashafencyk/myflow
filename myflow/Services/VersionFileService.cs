@@ -1,11 +1,7 @@
-﻿namespace myflow.Services.VersionFile;
+﻿namespace myflow.Services;
 
 public class VersionFileService
 {
-	public VersionFileService()
-	{
-	}
-
 	public async Task<Version> GetVersionAsync()
 	{
 		var path = "version"; //todo: move to config
