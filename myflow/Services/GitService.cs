@@ -73,9 +73,9 @@ public class GitService
 			throw new Exception("Tag is used by another commit.");
 		}
 
-		var localTagResult = await ExecuteGitCommand($"tag v${version.ToString()}");
+		var localTagResult = await ExecuteGitCommand($"tag v{version.ToString()}");
 		_logger.LogInformation("Local tag result:{LocalTagResult}", localTagResult);
-		var remoteTagResult = await ExecuteGitCommand($"push origin v${version}");
+		var remoteTagResult = await ExecuteGitCommand($"push origin v{version}");
 		_logger.LogInformation("Remote tag result:{RemoteTagResult}", remoteTagResult);
 	}
 	
