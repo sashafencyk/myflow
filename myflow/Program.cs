@@ -11,8 +11,6 @@ Console.WriteLine("Starting with env variables:");
 foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
 	Console.WriteLine("{0}:{1}", de.Key, de.Value);
 
-Environment.GetEnvironmentVariables();
-
 var host = Host.CreateDefaultBuilder(args)
 	.ConfigureServices((context, collection) =>
 	{

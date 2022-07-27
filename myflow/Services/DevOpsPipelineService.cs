@@ -34,10 +34,4 @@ public class DevOpsPipelineService
 			_logger.LogInformation("##vso[task.setvariable variable={Key};]{Value}", key, value);
 		}
 	}
-
-
-// export const setVariable = (name, value = '') => {
-
-// };
-
 }

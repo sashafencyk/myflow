@@ -91,8 +91,8 @@ public record BranchModel(string? PrSourceBranch, string? BuildSourceBranch, str
 	public string BranchEnvironment()
 	{
 		return IsPr() ? "pr" :
-			IsMaster() ? "prod" :
-			IsHotfix() || IsRelease() ? "test" : "dev";
+			IsMaster() || IsHotfix() ? "prod" :
+			IsRelease() ? "test" : "dev";
 	}
 
 	public Version? BranchVersion()
