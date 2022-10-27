@@ -48,11 +48,10 @@ public class MyFlowService
 
 			_pipelineService.SetVariables(variables);
 			_pipelineService.UpdateBuildNumber(buildNumber);
-			if (branch.IsMaster())
+			if (branch.IsMaster() && !branch.IsPr())
 			{
 				await _gitService.SetTagIfNotExistAsync(version);
 			}
-
 		}
 		catch (Exception ex)
 		{
@@ -66,8 +65,7 @@ public class MyFlowService
 		return new Dictionary<string, string>
 		{
 			{ "FLOW_ORIGINAL_BUILDNUMBER", _configuration["BUILD_BUILDNUMBER"] },
-			{ "FLOW_VERSION", version.ToString() },
-			{ "FLOW_BRANCH_ENV", branch.BranchEnvironment() }
+			{ "FLOW_VERSION", version.ToString() }
 		};
 	}
 

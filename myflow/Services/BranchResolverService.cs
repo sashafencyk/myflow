@@ -88,18 +88,10 @@ public record BranchModel(string? PrSourceBranch, string? BuildSourceBranch, str
 		return !string.IsNullOrWhiteSpace(PrSourceBranch);
 	}
 
-	public string BranchEnvironment()
-	{
-		return IsPr() ? "pr" :
-			IsMaster() || IsHotfix() ? "prod" :
-			IsRelease() ? "test" : "dev";
-	}
-
 	public Version? BranchVersion()
 	{
 		var matchValue = Regex.Match(Branch, "^(release|hotfix)/(.*)$").Groups[2].Value;
 		Version.TryParse(matchValue, out var version);
 		return version;
 	}
-	
 }
