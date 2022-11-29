@@ -71,7 +71,7 @@ public class MyFlowService
 
 	private string DetermineBuildNumber(BranchModel branch, Version version)
 	{
-		if (branch.IsMaster())
+		if (branch.IsMaster() && !branch.IsPr())
 		{
 			return version.ToString();
 		}
